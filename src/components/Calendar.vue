@@ -143,7 +143,7 @@ export default {
     dialog: false
   }),
   computed: {
-      title () {
+    title () {
         const { start, end } = this;
         if (!start || !end) {
           return '';
@@ -192,7 +192,7 @@ export default {
       });
       this.events = events;
     },
-    async addEvent(){
+    async addEvent () {
        if (this.name && this.start && this.end) {
         await db.collection("Réservation").add({
           name: this.name,
@@ -214,14 +214,17 @@ export default {
     editEvent (ev) {
       this.currentlyEditing = ev.id
     },
-   async updateEvent(ev){
-     await db.collection('Réservation').doc(this.currentlyEditing).update({
+   async updateEvent (ev) {
+     await db
+     .collection('Réservation')
+     .doc(this.currentlyEditing)
+     .update({
        details: ev.details
      });
      this.selectedOpen = false;
      this.currentlyEditing = null; 
     },
-    async deleteEvent(ev){
+    async deleteEvent (ev) {
       await db.collection('Réservation').doc(ev).delete();
       this.selectedOpen = false;
       this.getEvents();
@@ -243,14 +246,14 @@ export default {
     next () {
       this.$refs.calendar.next();
     },
-    editEvent(ev) {
+    editEvent (ev) {
       this.currentlyEditing = ev.id;
     },
     showEvent ({ nativeEvent, event }) {
       const open = () => {
-        this.selectedEvent = event
-        this.selectedElement = nativeEvent.target
-        setTimeout(() => this.selectedOpen = true, 10)
+        this.selectedEvent = event;
+        this.selectedElement = nativeEvent.target;
+        setTimeout(() => this.selectedOpen = true, 10);
       };
 
       if (this.selectedOpen) {
@@ -258,10 +261,10 @@ export default {
         setTimeout(open, 10);
       }
       else {
-        open()
+        open();
       }
 
-      nativeEvent.stopPropagation()
+      nativeEvent.stopPropagation();
     },
     updateRange ({ start, end }) {
       const events = []
